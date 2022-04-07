@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -18,20 +20,36 @@ public class Produto implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long id;
-	
-	private String nome;
-	
-	private BigDecimal quantidade;
-	
+	private long codigo;	
+	private String nome;	
+	private BigDecimal quantidade;	
 	private BigDecimal valor;
+	
+	@ManyToOne
+	@JoinColumn(name = "categoriaCodigo")
+	private Categoria categoria;
 
-	public long getId() {
-		return id;
+	
+	
+	public Produto() {
+		super();
 	}
 
-	public void setId(long id) {
-		this.id = id;
+	public Produto(long codigo, String nome, BigDecimal quantidade, BigDecimal valor, Categoria categoria) {
+		super();
+		this.codigo = codigo;
+		this.nome = nome;
+		this.quantidade = quantidade;
+		this.valor = valor;
+		this.categoria = categoria;
+	}
+
+	public long getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(long codigo) {
+		this.codigo = codigo;
 	}
 
 	public String getNome() {
@@ -57,10 +75,19 @@ public class Produto implements Serializable{
 	public void setValor(BigDecimal valor) {
 		this.valor = valor;
 	}
+	
+
+	public Categoria getCategoria() {
+		return categoria;
+	}
+
+	public void setCategoria(Categoria categoria) {
+		this.categoria = categoria;
+	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id);
+		return Objects.hash(codigo);
 	}
 
 	@Override
@@ -72,8 +99,10 @@ public class Produto implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		Produto other = (Produto) obj;
-		return id == other.id;
+		return codigo == other.codigo;
 	}
+
+	
 	
 	
 	

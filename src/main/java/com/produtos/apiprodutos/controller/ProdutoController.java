@@ -38,12 +38,12 @@ public class ProdutoController {
 		return produtoRepository.findAll();
 	}
 	
-	@GetMapping("/produto/{id}")
+	@GetMapping("/produto/{codigo}")
 	@ResponseStatus(HttpStatus.OK)
-	@ApiOperation(value = "Lista produto por ID")
-	public Produto listaProdutoId(@PathVariable(value="id") long id){
-		return produtoRepository.findById(id);
-	}
+	@ApiOperation(value = "Lista produto por codigo")
+	public Produto listaProdutoId(@PathVariable(value="codigo") long codigo){
+		return produtoRepository.findByCodigo(codigo);
+	} 
 	
 	@PostMapping("/produto")
 	@ResponseStatus(HttpStatus.CREATED)
