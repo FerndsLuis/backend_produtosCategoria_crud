@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.produtos.apiprodutos.repositoty.ProdutoRepository;
+import com.produtos.apiprodutos.service.ProdutoService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -29,40 +29,40 @@ import com.produtos.apiprodutos.models.Produto;
 public class ProdutoController {
 	
 	@Autowired
-	ProdutoRepository produtoRepository;
+	private ProdutoService produtoService;
 	
 	@GetMapping("/produtos")
 	@ResponseStatus(HttpStatus.OK)
 	@ApiOperation(value = "Lista todos os produtos")
 	public List<Produto> listaProdutos(){
-		return produtoRepository.findAll();
+		return produtoService.findAll();
 	}
 	
 	@GetMapping("/produto/{codigo}")
 	@ResponseStatus(HttpStatus.OK)
 	@ApiOperation(value = "Lista produto por codigo")
 	public Produto listaProdutoId(@PathVariable(value="codigo") long codigo){
-		return produtoRepository.findByCodigo(codigo);
+		return produtoService.findByCodigo(codigo);
 	} 
 	
 	@PostMapping("/produto")
 	@ResponseStatus(HttpStatus.CREATED)
 	@ApiOperation(value = "Salva um produto")
 	public Produto salvaProduto(@RequestBody Produto produto) {
-		return produtoRepository.save(produto);
+		return produtoService.create(produto);
 	}
 	
 	@DeleteMapping("/produto")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	@ApiOperation(value = "Deleta um produto")
 	public void deletaProduto(@RequestBody Produto produto) {
-		produtoRepository.delete(produto);
+		produtoService.delete(produto);
 	}
 	
 	@PutMapping("/produto")
 	@ResponseStatus(HttpStatus.OK)
 	@ApiOperation(value = "Atualiza um produto")
 	public Produto atualizaProduto(@RequestBody Produto produto) {
-		return produtoRepository.save(produto);
+		return produtoService.create(produto);
 	}
 }
